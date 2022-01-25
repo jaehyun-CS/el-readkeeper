@@ -9,4 +9,4 @@ const Landing = (): JSX.Element => {
     );
 };
 
-export default Landing
+export default Landing;
