@@ -1,18 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import {
-    getAuth,
-    connectAuthEmulator,
-    signInWithEmailAndPassword
-} from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { firebaseConfig } from './firebase.config';
 
 const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
 
-connectAuthEmulator(auth, 'http://localhost:9099');
-
-const loginEmailPassword = async () => {
-    
-}
-
-
+export const auth = getAuth(firebaseApp);
+export default firebaseApp;
