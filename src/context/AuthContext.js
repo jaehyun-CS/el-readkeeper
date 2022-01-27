@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { auth } from '../firebaseSetup';
 import { User, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
+// Referenced: https://www.youtube.com/watch?v=PKwu15ldZ7k&t=2374s
 
 const AuthContext = React.createContext();
 

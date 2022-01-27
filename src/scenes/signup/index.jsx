@@ -10,11 +10,11 @@ import { useNavigate } from 'react-router-dom';
 
 
 const signupSchema = Yup.object().shape({
-    email: Yup.string().email('fake ass email').required('required u lazy pos'),
+    email: Yup.string().email('Fake email, nice try').required('Email is required'),
     password: Yup.string()
-        .min(7, 'too short! dats what she said')
+        .min(7, 'Too short! dats what she said')
         .max(30, 'tf is this, a coordinate')
-        .required('this crap is also required u tool'),
+        .required('Password is required'),
 });
 
 
