@@ -1,10 +1,12 @@
 import { Field, Form, Formik } from 'formik';
 import '../index.css';
-import { Typography, Paper, TextField, Button } from '@mui/material';
+import { Typography, Paper, TextField, Button, Alert } from '@mui/material';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { styles } from '../login-signup-styles';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, currentUser } from '../../context/AuthContext';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const signupSchema = Yup.object().shape({
@@ -19,18 +21,24 @@ const signupSchema = Yup.object().shape({
 const SignupPage = () => {
 
     const { signup } = useAuth();
+    const navigate = useNavigate();
 
-    // const handleSubmit = (data: { email: string, password: string }, { setSubmitting }: { setSubmitting: any }): void => {
-    //     setSubmitting(true);
-    //     console.log('SUBMITTED: ', data);
-    //     setSubmitting(false);
-    // };
+    const [ submitting, setSubmitting ] = useState(false);
+    const [ myError, setMyError ] = useState('');
 
-
-    const handleSubmit = (values) => {
+    const handleSubmit = async (data) => {
         // e.preventDefault();
 
-        signup(values.email, values.password);
+        try {
+            setMyError('');
+            setSubmitting(true);
+            await signup(data.email, data.password);
+            navigate('/');
+        } catch {
+            console.log('FAILED TO CREATE AN ACCOUNT :(');
+            setMyError('Failed to create account');
+        }
+        setSubmitting(false);
     };
 
 
@@ -46,7 +54,7 @@ const SignupPage = () => {
                 validationSchema={ signupSchema }
                 onSubmit={ (values) => { handleSubmit(values); } }
             >
-                {({ values, isSubmitting }) => (
+                {({ errors, touched }) => (
                     <Form>
                         <Field
                             fullWidth
@@ -56,6 +64,7 @@ const SignupPage = () => {
                             as={ TextField }
                             sx={ styles.fieldBox }
                         />
+                        { errors.email && touched.email ? ( <Alert severity="error" variant='filled'>{ errors.email }</Alert> ) : null }
 
                         <Field
                             fullWidth
@@ -65,16 +74,18 @@ const SignupPage = () => {
                             as={ TextField }
                             sx={ styles.fieldBox }
                         />
+                        { errors.password && touched.password ? ( <Alert severity="error" variant='filled'>{ errors.password }</Alert> ) : null }
 
                         <Button
                             fullWidth
-                            disabled={ isSubmitting }
+                            disabled={ submitting }
                             variant='contained'
                             sx={ styles.submitButton }
                             type='submit'
                         >
                             Create Account
                         </Button>
+                        { myError === '' ? null : ( <Alert sx={{ marginBottom: '1em' }} severity="error" variant='filled'>{ myError }</Alert> ) }
                     </Form>
                 )}
             </Formik>

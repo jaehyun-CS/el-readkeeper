@@ -5,6 +5,7 @@ import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 
 const styles = {
@@ -39,13 +40,27 @@ const styles = {
 };
 
 const AppHeader = (): JSX.Element => {
+    const { logout } = useAuth();
     const navigate = useNavigate();
 
     const [ open, setOpen ] = useState(false);
+    const [ myError, setMyError ] = useState('');
 
     const toggleDrawer = () => {
         console.log('TOGGLIN');
         setOpen(!open);
+    };
+
+    const handleSignout = () => {
+
+        try {
+            setMyError('');
+            logout();
+            navigate('/login');
+        } catch {
+            setMyError('Failed to log out');
+        }
+
     };
 
     return (
@@ -101,7 +116,7 @@ const AppHeader = (): JSX.Element => {
                 </Drawer>
                 <Typography variant='h4'component='div' sx={ styles.logoText }>ReadKeeper</Typography>
                 <LocalLibraryIcon sx={ styles.libraryIcon }/>
-                <Button sx={ styles.logoutButton } onClick={ () => { navigate('/login'); } }>
+                <Button sx={ styles.logoutButton } onClick={ handleSignout }>
                     <Typography variant='h6' sx={ styles.logoutText }>
                         Log out
                     </Typography>

@@ -1,22 +1,45 @@
 import { Field, Form, Formik } from 'formik';
 import '../index.css';
-import { Typography, Paper, TextField, Button } from '@mui/material';
+import { Typography, Paper, TextField, Button, Alert } from '@mui/material';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { styles } from '../login-signup-styles';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, currentUser } from '../../context/AuthContext';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
+const signupSchema = Yup.object().shape({
+    email: Yup.string().email('fake ass email').required('required u lazy pos'),
+    password: Yup.string()
+        .min(7, 'too short! dats what she said')
+        .max(30, 'tf is this, a coordinate')
+        .required('this crap is also required u tool'),
+});
 
-//
-// const handleSubmit = (data: { email: string, password: string }, { setSubmitting }: { setSubmitting: any }): void => {
-//     setSubmitting(true);
-//     console.log('SUBMITTED: ', data);
-//
-//     setSubmitting(false);
-// };
 
 const LoginPage = () => {
+
+    const { login } = useAuth();
+    const navigate = useNavigate();
+
+    const [ submitting, setSubmitting ] = useState(false);
+    const [ myError, setMyError ] = useState('');
+
+    const handleSubmit = async (data) => {
+        // e.preventDefault();
+
+        try {
+            setMyError('');
+            setSubmitting(true);
+            await login(data.email, data.password);
+            navigate('/');
+        } catch {
+            console.log('FAILED TO LOG IN :(');
+            setMyError('Failed to log in');
+        }
+        setSubmitting(false);
+    };
 
 
     return (
@@ -28,11 +51,10 @@ const LoginPage = () => {
                     email: '',
                     password: ''
                 }}
-                onSubmit={ (values) => {
-                    console.log(values); }
-                }
+                validationSchema={ signupSchema }
+                onSubmit={ (values) => { handleSubmit(values); } }
             >
-                {({ values, isSubmitting }) => (
+                {({ errors, touched }) => (
                     <Form>
                         <Field
                             fullWidth
@@ -42,6 +64,7 @@ const LoginPage = () => {
                             as={ TextField }
                             sx={ styles.fieldBox }
                         />
+                        { errors.email && touched.email ? ( <Alert severity="error" variant='filled'>{ errors.email }</Alert> ) : null }
 
                         <Field
                             fullWidth
@@ -51,16 +74,18 @@ const LoginPage = () => {
                             as={ TextField }
                             sx={ styles.fieldBox }
                         />
+                        { errors.password && touched.password ? ( <Alert severity="error" variant='filled'>{ errors.password }</Alert> ) : null }
 
                         <Button
                             fullWidth
-                            disabled={ isSubmitting }
+                            disabled={ submitting }
                             variant='contained'
                             sx={ styles.submitButton }
                             type='submit'
                         >
                             Log in
                         </Button>
+                        { myError === '' ? null : ( <Alert sx={{ marginBottom: '1em' }} severity="error" variant='filled'>{ myError }</Alert> ) }
                     </Form>
                 )}
             </Formik>

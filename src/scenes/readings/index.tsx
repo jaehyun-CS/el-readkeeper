@@ -8,7 +8,7 @@ const ReadingsPage = (): JSX.Element => {
         <>
             <AppHeader />
             <Container id='container'>
-                <Typography variant='h3' sx={{ fontFamily: 'Avenir Next Condensed', color: '#260101', fontWeight: 'medium', padding: '.5em 0 3em 0' }}>Your Readings</Typography>
+                <Typography variant='h3' sx={{ fontFamily: 'Avenir Next Condensed', color: '#260101', fontWeight: 'medium', padding: '.5em 0 30em 0' }}>Your Readings</Typography>
             </Container>
         </>
     );

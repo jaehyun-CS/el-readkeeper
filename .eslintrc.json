@@ -30,6 +30,7 @@
         "**/build/**/*.js"
     ],
     "rules": {
+        "@typescript-eslint/ban-ts-ignore": "off",
         "indent": [
             "error",
             4

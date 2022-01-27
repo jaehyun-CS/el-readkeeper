@@ -49,13 +49,13 @@ const handleClick = () => {
 
 const BookCard = (props : BookData): JSX.Element => {
     return (
-        <Grid item xs={2.7}>
-            <Card elevation={7} sx={ styles.card }>
+        <Grid item xs={ 2.7 }>
+            <Card elevation={ 7 } sx={ styles.card }>
                 <Chip label='See Details' variant="outlined" sx={ styles.details } onClick={ handleClick } />
                 <CardContent>
-                    <Typography sx={styles.title} variant='h4'>{ props.title }</Typography>
-                    <Typography sx={styles.subtitle} variant='h6'>{ props.subtitle }</Typography>
-                    <Typography sx={styles.author} variant='h6'>{ props.author }</Typography>
+                    <Typography sx={ styles.title } variant='h4'>{ props.title }</Typography>
+                    <Typography sx={ styles.subtitle } variant='h6'>{ props.subtitle }</Typography>
+                    <Typography sx={ styles.author } variant='h6'>{ props.author }</Typography>
                 </CardContent>
             </Card>
         </Grid>
