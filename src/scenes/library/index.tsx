@@ -1,7 +1,7 @@
 import AppHeader from '../../components/AppHeader';
 import BookCard, { BookData } from '../../components/BookCard';
 import '../index.css';
-import { Container, Fab, Grid, Paper, Typography } from '@mui/material';
+import { Container, Fab, Grid, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 

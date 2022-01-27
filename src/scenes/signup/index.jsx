@@ -1,36 +1,36 @@
 import { Field, Form, Formik } from 'formik';
 import '../index.css';
-import { ThemeProvider, Typography, Grid, Paper, TextField, Button, Tabs } from '@mui/material';
+import { Typography, Paper, TextField, Button } from '@mui/material';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { styles } from '../login-signup-styles';
 import { useAuth } from '../../context/AuthContext';
 
 
-
-// const handleSubmit = (data: { email: string, password: string }, { setSubmitting }: { setSubmitting: any }): void => {
-//     setSubmitting(true);
-//     console.log('SUBMITTED: ', data);
-//
-//
-//
-//
-//
-//
-//     setSubmitting(false);
-// };
+const signupSchema = Yup.object().shape({
+    email: Yup.string().email('fake ass email').required('required u lazy pos'),
+    password: Yup.string()
+        .min(7, 'too short! dats what she said')
+        .max(30, 'tf is this, a coordinate')
+        .required('this crap is also required u tool'),
+});
 
 
+const SignupPage = () => {
 
-const SignupPage = (): JSX.Element => {
+    const { signup } = useAuth();
 
-    // const { signup } = useAuth();
+    // const handleSubmit = (data: { email: string, password: string }, { setSubmitting }: { setSubmitting: any }): void => {
+    //     setSubmitting(true);
+    //     console.log('SUBMITTED: ', data);
+    //     setSubmitting(false);
+    // };
 
-    const handleSubmit = (data: { email: string, password: string }, { setSubmitting }: { setSubmitting: any }): void => {
+
+    const handleSubmit = (values) => {
         // e.preventDefault();
 
-        // signup(data.email, data.password);
-
+        signup(values.email, values.password);
     };
 
 
@@ -43,7 +43,8 @@ const SignupPage = (): JSX.Element => {
                     email: '',
                     password: ''
                 }}
-                onSubmit={ handleSubmit }
+                validationSchema={ signupSchema }
+                onSubmit={ (values) => { handleSubmit(values); } }
             >
                 {({ values, isSubmitting }) => (
                     <Form>
@@ -77,13 +78,6 @@ const SignupPage = (): JSX.Element => {
                     </Form>
                 )}
             </Formik>
-
-            {/*<Button*/}
-            {/*    fullWidth*/}
-            {/*    sx={ styles.redirectButton }*/}
-            {/*>*/}
-            {/*    Don&apos;t have an account? Sign Up*/}
-            {/*</Button>*/}
 
             <Link to='/login'>
                 <Typography variant='subtitle1' sx={ styles.redirectText }>
