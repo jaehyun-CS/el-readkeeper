@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import theme from '../../theme';
-import './index.css';
+import '../index.css';
 import { ThemeProvider, Typography, Grid, Paper, TextField, Button, Tabs } from '@mui/material';
 import { getAuth, connectAuthEmulator, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';

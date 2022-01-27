@@ -1,26 +1,39 @@
-import React from 'react';
 import { Field, Form, Formik } from 'formik';
-import './index.css';
+import '../index.css';
 import { ThemeProvider, Typography, Grid, Paper, TextField, Button, Tabs } from '@mui/material';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { styles } from '../login-signup-styles';
-
-
-const handleSubmit = (data: { email: string, password: string }, { setSubmitting }: { setSubmitting: any }): void => {
-    setSubmitting(true);
-    console.log('SUBMITTED: ', data);
+import { useAuth } from '../../context/AuthContext';
 
 
 
+// const handleSubmit = (data: { email: string, password: string }, { setSubmitting }: { setSubmitting: any }): void => {
+//     setSubmitting(true);
+//     console.log('SUBMITTED: ', data);
+//
+//
+//
+//
+//
+//
+//     setSubmitting(false);
+// };
 
-
-
-    setSubmitting(false);
-};
 
 
 const SignupPage = (): JSX.Element => {
+
+    // const { signup } = useAuth();
+
+    const handleSubmit = (data: { email: string, password: string }, { setSubmitting }: { setSubmitting: any }): void => {
+        // e.preventDefault();
+
+        // signup(data.email, data.password);
+
+    };
+
+
     return(
         <Paper sx={ styles.loginBox }>
             <Typography variant='h2' sx={ styles.title }>ReadKeeper</Typography>
@@ -77,7 +90,8 @@ const SignupPage = (): JSX.Element => {
                     Already have an account? Log in
                 </Typography>
             </Link>
-        </Paper>    );
+        </Paper>
+    );
 };
 
 export default SignupPage;

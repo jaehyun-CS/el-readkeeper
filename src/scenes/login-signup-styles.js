@@ -2,7 +2,7 @@
 
 export const styles = {
     loginBox: {
-        background: '#EBEEF2',
+        backgroundColor: '#D9D9D9',
         textAlign: 'center',
         margin: '5em auto 5em auto',
         width: '25%',
@@ -13,7 +13,7 @@ export const styles = {
         display: 'block',
     },
     title: {
-        color: '#402312',
+        color: '#260101',
         fontFamily: 'Didot',
         paddingBottom: '.25em'
     },
@@ -21,9 +21,14 @@ export const styles = {
         fontFamily: 'Avenir Next'
     },
     submitButton: {
+        fontFamily: 'Avenir Next',
         margin: '1em auto 1em auto',
         display: 'block',
-        background: '#8C6542'
+        backgroundColor: '#260101',
+
+        '&:hover': {
+            backgroundColor: '#8C4D3F'
+        }
     },
     redirectButton: {
         margin: '1em auto auto auto',
