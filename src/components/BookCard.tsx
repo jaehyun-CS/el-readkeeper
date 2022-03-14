@@ -1,5 +1,6 @@
 import { Card, CardMedia, CardContent, CardActions, Typography, Grid, Button, Chip } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Book from '../types/Book';
 
 
 const styles = {
@@ -34,20 +35,11 @@ const styles = {
     }
 };
 
-export type BookData = {
-    title: string,
-    subtitle: string,
-    author: string,
-    genre: string,
-    rating: number,
-    key: number
-};
-
 const handleClick = () => {
     console.log('CLICKED');
 };
 
-const BookCard = (props : BookData): JSX.Element => {
+const BookCard = (props : Book): JSX.Element => {
     return (
         <Grid item xs={ 2.7 }>
             <Card elevation={ 7 } sx={ styles.card }>

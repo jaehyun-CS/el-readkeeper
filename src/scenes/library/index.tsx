@@ -1,11 +1,12 @@
 import AppHeader from '../../components/AppHeader';
-import BookCard, { BookData } from '../../components/BookCard';
+import BookCard from '../../components/BookCard';
+import Book from '../../types/Book';
 import '../index.css';
 import { Container, Fab, Grid, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 
-const books: BookData[] = [
+const books: Book[] = [
     {
         title: 'God Is Not One',
         subtitle: 'The Eight Rival Religions That Run the World',
