@@ -1,6 +1,7 @@
 import { Card, CardMedia, CardContent, CardActions, Typography, Grid, Button, Chip } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Book from '../types/Book';
+import BookModal from '../components/BookModal';
 
 
 const styles = {
@@ -44,6 +45,7 @@ const BookCard = (props : Book): JSX.Element => {
         <Grid item xs={ 2.7 }>
             <Card elevation={ 7 } sx={ styles.card }>
                 <Chip label='See Details' variant="outlined" sx={ styles.details } onClick={ handleClick } />
+                <BookModal book={ props } modalType='edit' />
                 <CardContent>
                     <Typography sx={ styles.title } variant='h4'>{ props.title }</Typography>
                     <Typography sx={ styles.subtitle } variant='h6'>{ props.subtitle }</Typography>

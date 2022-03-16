@@ -4,6 +4,7 @@ import Book from '../../types/Book';
 import '../index.css';
 import { Container, Fab, Grid, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import BookModal from '../../components/BookModal';
 
 
 const books: Book[] = [
@@ -85,9 +86,7 @@ const LibraryPage = (): JSX.Element => {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Fab size='medium' color="primary" aria-label="add" sx={ styles.button }>
-                            <AddIcon />
-                        </Fab>
+                        <BookModal book={ null } modalType='create'/>
                     </Grid>
                 </Grid>
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3}}>
