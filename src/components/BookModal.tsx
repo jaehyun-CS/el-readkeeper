@@ -1,6 +1,6 @@
 import React from 'react';
 import Book from './../types/Book';
-import { Formik } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import AddIcon from '@mui/icons-material/Add';
 import {
     Button,
@@ -11,8 +11,10 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
-    TextField
+    TextField,
+    Alert
 } from '@mui/material';
+import { object, string, number } from 'yup';
 
 
 type BookModalProps = {
@@ -90,6 +92,14 @@ const BookModal = (props: BookModalProps): JSX.Element => {
         setOpen(!open);
     };
 
+    const FormValidator = object({
+        title: string().required('A title is required bozo'),
+        subtitle: string(),
+        author: string().required('A book requires an author dumbass'),
+        genre: string().required('A genre is required'),
+        rating: number().required('Rating is also required')
+    });
+
     const initialValues = props.book === null ?
         {
             title: '',
@@ -117,6 +127,7 @@ const BookModal = (props: BookModalProps): JSX.Element => {
                 </DialogTitle>
                 <Formik
                     initialValues={ initialValues }
+                    validationSchema={ FormValidator }
                     onSubmit={ (data, { setSubmitting }) => {
                         console.log('Submitting');
                         setSubmitting(false);
@@ -131,67 +142,87 @@ const BookModal = (props: BookModalProps): JSX.Element => {
                         touched,
                         isSubmitting
                     }) => (
-                        <form>
+                        <Form>
                             <DialogContent>
                                 <DialogContentText>
                                     { renderDescription() }
                                 </DialogContentText>
-                                <TextField
+                                <Field
                                     required
+                                    type='input'
                                     autoFocus
                                     value={ values.title }
                                     margin='dense'
-                                    id='title'
+                                    name='title'
                                     label='Title'
                                     fullWidth
                                     variant='outlined'
                                     sx={{ marginTop: '1em' }}
+                                    as={ TextField }
                                 />
-                                <TextField
+                                { errors.title && touched.title ? ( <Alert severity='error' variant='filled'>{ errors.title }</Alert>) : null }
+
+                                <Field
+                                    type='input'
                                     value={ values.subtitle }
                                     margin='dense'
                                     id='subtitle'
                                     label='Subtitle'
                                     fullWidth
                                     variant='outlined'
+                                    as={ TextField }
                                 />
-                                <TextField
+                                { errors.subtitle && touched.subtitle ? ( <Alert severity='error' variant='filled'>{ errors.subtitle }</Alert>) : null }
+
+                                <Field
                                     required
+                                    type='input'
                                     value={ values.author }
                                     margin='dense'
                                     id='author'
                                     label='Author'
                                     fullWidth
                                     variant='outlined'
+                                    as={ TextField }
                                 />
-                                <TextField
+                                { errors.author && touched.author ? ( <Alert severity='error' variant='filled'>{ errors.author }</Alert>) : null }
+
+                                <Field
                                     required
+                                    type='input'
                                     value={ values.genre }
                                     margin='dense'
                                     id='genre'
                                     label='Genre'
                                     fullWidth
                                     variant='outlined'
+                                    as={ TextField }
                                 />
-                                <TextField
+                                { errors.genre && touched.genre ? ( <Alert severity='error' variant='filled'>{ errors.genre }</Alert>) : null }
+
+                                <Field
                                     required
+                                    type='input'
                                     value={ values.rating }
                                     margin='dense'
                                     id='rating'
                                     label='Rating'
                                     fullWidth
                                     variant='outlined'
+                                    as={ TextField }
                                 />
+                                { errors.rating && touched.rating ? ( <Alert severity='error' variant='filled'>{ errors.rating }</Alert>) : null }
+
                             </DialogContent>
                             <DialogActions>
                                 <Button variant="text" onClick={ toggleModal } sx={ styles.cancelButton }>
                                     Cancel
                                 </Button>
-                                <Button type='submit' variant="contained" sx={ styles.submitButton }>
+                                <Button disabled={ isSubmitting } type='submit' variant="contained" sx={ styles.submitButton }>
                                     Submit
                                 </Button>
                             </DialogActions>
-                        </form>
+                        </Form>
                     )}
                 </Formik>
             </Dialog>
