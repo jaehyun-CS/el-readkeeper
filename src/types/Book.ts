@@ -3,10 +3,11 @@
  */
 interface Book {
     title: string,
-    subtitle: string,
+    subtitle: string | null,
     author: string,
     genre: string,
     rating: number,
+    description: string | null,
     key: number
 }
 

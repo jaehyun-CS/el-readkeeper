@@ -14,6 +14,7 @@ const books: Book[] = [
         author: 'Stephen Prothero',
         genre: 'Religion',
         rating: 0,
+        description: 'This is a description of this book.',
         key: 1
     },
     {
@@ -22,7 +23,8 @@ const books: Book[] = [
         author: 'Stephen Prothero',
         genre: 'Religion',
         rating: 0,
-        key: 2
+        description: 'This is a description of this book.',
+        key: 1
     },
     {
         title: 'God Is Not One',
@@ -30,7 +32,8 @@ const books: Book[] = [
         author: 'Stephen Prothero',
         genre: 'Religion',
         rating: 0,
-        key: 3
+        description: 'This is a description of this book.',
+        key: 1
     },
     {
         title: 'God Is Not One',
@@ -38,16 +41,9 @@ const books: Book[] = [
         author: 'Stephen Prothero',
         genre: 'Religion',
         rating: 0,
-        key: 4
+        description: 'This is a description of this book.',
+        key: 1
     },
-    {
-        title: 'God Is Not One',
-        subtitle: 'The Eight Rival Religions That Run the World',
-        author: 'Stephen Prothero',
-        genre: 'Religion',
-        rating: 0,
-        key: 5
-    }
 ];
 
 const styles = {
@@ -99,6 +95,7 @@ const LibraryPage = (): JSX.Element => {
                                     author={ book.author }
                                     genre={ book.genre }
                                     rating={ book.rating }
+                                    description={ book.description }
                                     key={ book.key }
                                 />
                             );

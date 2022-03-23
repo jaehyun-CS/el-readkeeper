@@ -13,7 +13,7 @@ const signupSchema = Yup.object().shape({
     email: Yup.string().email('Fake email, nice try').required('Email is required'),
     password: Yup.string()
         .min(7, 'Too short! dats what she said')
-        .max(30, 'tf is this, a coordinate')
+        .max(15, 'tf is this, a coordinate')
         .required('Password is required'),
 });
 

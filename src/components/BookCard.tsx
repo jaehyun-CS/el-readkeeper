@@ -1,4 +1,5 @@
-import { Card, CardMedia, CardContent, CardActions, Typography, Grid, Button, Chip } from '@mui/material';
+import React from 'react';
+import { Card, CardMedia, CardContent, CardActions, Typography, Grid, Button, Chip, Popover, Paper } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Book from '../types/Book';
 import BookModal from '../components/BookModal';
@@ -31,20 +32,68 @@ const styles = {
     },
     details: {
         fontFamily: 'Avenir Next',
+        fontWeight: 'normal',
+        textTransform: 'capitalize',
         color: 'white',
         margin: '1em 0 0 1em'
+    },
+    hiddenButton: {
+        '&:hover': {
+            backgroundColor: '#8C4D3F',
+            cursor: 'grab'
+        }
+    },
+    popper: {
+        padding: '1em'
+    },
+    text: {
+        fontFamily: 'Avenir Next',
     }
 };
 
-const handleClick = () => {
-    console.log('CLICKED');
-};
-
 const BookCard = (props : Book): JSX.Element => {
+
+    const [ anchorEl, setAnchorEl ] = React.useState<HTMLButtonElement | null>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+
+    const id = open ? 'popover' : undefined;
+
     return (
         <Grid item xs={ 2.7 }>
             <Card elevation={ 7 } sx={ styles.card }>
-                <Chip label='See Details' variant="outlined" sx={ styles.details } onClick={ handleClick } />
+                <Button sx={ styles.hiddenButton } size='small' onClick={ handleClick }>
+                    <Chip label="See Details" variant="outlined" sx={ styles.details }/>
+                </Button>
+
+                <Popover
+                    id={ id }
+                    open={ open }
+                    onMouseLeave={ handleClose }
+                    onClose={ handleClose }
+                    anchorEl={ anchorEl }
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left'
+                    }}
+                >
+                    <Paper sx={ styles.popper } elevation={3}>
+                        <Typography sx={ styles.text } variant='h6'>{ props.title }</Typography>
+                        <Typography sx={ styles.text } variant='body1'>{ props.subtitle && `Subtitle: ${ props.subtitle }` }</Typography>
+                        <Typography sx={ styles.text } variant='body1'>Author: { props.author }</Typography>
+                        <Typography sx={ styles.text } variant='body1'>Genre: { props.genre }</Typography>
+                        <Typography sx={ styles.text } variant='body1'>Rating: { props.rating }</Typography>
+                        <Typography sx={ styles.text } variant='body1'>{ props.description && `Description: ${ props.description }` }</Typography>
+                    </Paper>
+                </Popover>
                 <BookModal book={ props } modalType='edit' />
                 <CardContent>
                     <Typography sx={ styles.title } variant='h4'>{ props.title }</Typography>
