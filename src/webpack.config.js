@@ -5,12 +5,15 @@ module.exports = {
         filename: './bundle.js'
     },
     resolve: {
+        fallback: resolve.fallback: {
+            "util": require.resolve("util/")
+        }
         // changed from extensions: [".js", ".jsx"]
         extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".jsx"],
     },
     module: {
         rules: [
-            // changed from { test: /\.jsx?$/, use: { loader: 'babel-loader' }, exclude: /node_modules/ },
+            // changed from { test: /\.jsx?$/, use: { loadeisr: 'babel-loader' }, exclude: /node_modules/ },
             { test: /\.(t|j)sx?$/, use: { loader: 'ts-loader' }, exclude: /node_modules/ },
 
             // addition - add source-map support
