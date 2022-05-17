@@ -9,40 +9,44 @@ import BookModal from '../../components/BookModal';
 
 const books: Book[] = [
     {
+        uid: 'someuid3',
         title: 'God Is Not One',
         subtitle: 'The Eight Rival Religions That Run the World',
         author: 'Stephen Prothero',
         genre: 'Religion',
         rating: 0,
         description: 'This is a description of this book.',
-        key: 1
+        key: 'asdjfkasdjhf'
     },
     {
+        uid: 'someuid2',
         title: 'God Is Not One',
         subtitle: 'The Eight Rival Religions That Run the World',
         author: 'Stephen Prothero',
         genre: 'Religion',
         rating: 0,
         description: 'This is a description of this book.',
-        key: 1
+        key: 'asigidis'
     },
     {
+        uid: 'someuid1',
         title: 'God Is Not One',
         subtitle: 'The Eight Rival Religions That Run the World',
         author: 'Stephen Prothero',
         genre: 'Religion',
         rating: 0,
         description: 'This is a description of this book.',
-        key: 1
+        key: 'ldksldkls'
     },
     {
+        uid: 'someuid',
         title: 'God Is Not One',
         subtitle: 'The Eight Rival Religions That Run the World',
         author: 'Stephen Prothero',
         genre: 'Religion',
         rating: 0,
         description: 'This is a description of this book.',
-        key: 1
+        key: 'asdfasdf'
     },
 ];
 
@@ -90,6 +94,7 @@ const LibraryPage = (): JSX.Element => {
                         books.length > 0 ? books.map(book => {
                             return (
                                 <BookCard
+                                    uid={ book.uid }
                                     title={ book.title }
                                     subtitle={ book.subtitle }
                                     author={ book.author }

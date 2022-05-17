@@ -1,5 +1,5 @@
 import React from 'react';
-import Book from './../types/Book';
+import Book, { NewBookInfo } from './../types/Book';
 import { Formik, Form, Field } from 'formik';
 import AddIcon from '@mui/icons-material/Add';
 import {
@@ -15,6 +15,7 @@ import {
     Alert
 } from '@mui/material';
 import { object, string, number } from 'yup';
+import { createNewBook } from '../services/library-service';
 
 
 type BookModalProps = {
@@ -92,12 +93,23 @@ const BookModal = (props: BookModalProps): JSX.Element => {
         setOpen(!open);
     };
 
+    const submit = (bookData: NewBookInfo) => {
+        if (props.modalType === 'create') {
+            createNewBook(bookData).catch(err => {
+                console.log('Error occurred while adding new book: ', err);
+            });
+        } else {
+            // edit shit
+        }
+    };
+
     const FormValidator = object({
         title: string().required('A title is required bozo'),
         subtitle: string(),
         author: string().required('A book requires an author dumbass'),
         genre: string().required('A genre is required'),
-        rating: number().required('Rating is also required')
+        rating: number().required('Rating is also required'),
+        description: string().required('Description is required')
     });
 
     const initialValues = props.book === null ?
@@ -106,7 +118,8 @@ const BookModal = (props: BookModalProps): JSX.Element => {
             subtitle: '',
             author: '',
             genre: '',
-            rating: ''
+            rating: 0,
+            description: ''
         }
         :
         {
@@ -114,7 +127,8 @@ const BookModal = (props: BookModalProps): JSX.Element => {
             subtitle: props.book.subtitle,
             author: props.book.author,
             genre: props.book.genre,
-            rating: props.book.rating
+            rating: props.book.rating,
+            description: props.book.description
         };
 
     return (
@@ -125,12 +139,15 @@ const BookModal = (props: BookModalProps): JSX.Element => {
                 <DialogTitle>
                     { renderTitle() }
                 </DialogTitle>
+
                 <Formik
                     initialValues={ initialValues }
                     validationSchema={ FormValidator }
                     onSubmit={ (data, { setSubmitting }) => {
                         console.log('Submitting');
+                        submit(data);
                         setSubmitting(false);
+                        toggleModal();
                     }}
                 >
                     {({
@@ -212,6 +229,21 @@ const BookModal = (props: BookModalProps): JSX.Element => {
                                     as={ TextField }
                                 />
                                 { errors.rating && touched.rating ? ( <Alert severity='error' variant='filled'>{ errors.rating }</Alert>) : null }
+
+                                <Field
+                                    required
+                                    multiline
+                                    minRows={ 5 }
+                                    type='input'
+                                    value={ values.description }
+                                    margin='dense'
+                                    id='description'
+                                    label='Description'
+                                    fullWidth
+                                    variant='outlined'
+                                    as={ TextField }
+                                />
+                                { errors.description && touched.description ? ( <Alert severity='error' variant='filled'>{ errors.description }</Alert>) : null }
 
                             </DialogContent>
                             <DialogActions>

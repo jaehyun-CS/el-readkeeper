@@ -8,8 +8,8 @@ import BookModal from '../components/BookModal';
 const styles = {
     card: {
         background: '#8C4D3F',
-        width: 280,
-        height: 400,
+        width: 265,
+        height: 375,
         paddingBottom: '.5em',
         border: 0,
         margin: '0 2em 2em 0 !important',
@@ -40,7 +40,6 @@ const styles = {
     hiddenButton: {
         '&:hover': {
             backgroundColor: '#8C4D3F',
-            cursor: 'grab'
         }
     },
     popper: {
