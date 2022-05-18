@@ -50,6 +50,11 @@ const styles = {
     }
 };
 
+/**
+ * Renders a visualization of a Book's data, in a card format
+ * @param props
+ * @constructor
+ */
 const BookCard = (props : Book): JSX.Element => {
 
     const [ anchorEl, setAnchorEl ] = React.useState<HTMLButtonElement | null>(null);
@@ -69,6 +74,7 @@ const BookCard = (props : Book): JSX.Element => {
     return (
         <Grid item xs={ 2.7 }>
             <Card elevation={ 7 } sx={ styles.card }>
+
                 <Button sx={ styles.hiddenButton } size='small' onClick={ handleClick }>
                     <Chip label="See Details" variant="outlined" sx={ styles.details }/>
                 </Button>
@@ -93,7 +99,9 @@ const BookCard = (props : Book): JSX.Element => {
                         <Typography sx={ styles.text } variant='body1'>{ props.description && `Description: ${ props.description }` }</Typography>
                     </Paper>
                 </Popover>
+
                 <BookModal book={ props } modalType='edit' />
+
                 <CardContent>
                     <Typography sx={ styles.title } variant='h4'>{ props.title }</Typography>
                     <Typography sx={ styles.subtitle } variant='h6'>{ props.subtitle }</Typography>

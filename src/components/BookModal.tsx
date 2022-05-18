@@ -15,7 +15,7 @@ import {
     Alert
 } from '@mui/material';
 import { object, string, number } from 'yup';
-import { createNewBook } from '../services/library-service';
+import { createNewBook, updateBook } from '../services/library-service';
 
 
 type BookModalProps = {
@@ -67,7 +67,6 @@ const styles = {
 const BookModal = (props: BookModalProps): JSX.Element => {
     const [ open, setOpen ] = React.useState(false);
 
-
     const renderButton = (): JSX.Element => {
         return props.modalType === 'create' ?
             (
@@ -99,7 +98,11 @@ const BookModal = (props: BookModalProps): JSX.Element => {
                 console.log('Error occurred while adding new book: ', err);
             });
         } else {
-            // edit shit
+            if (props.book && props.book.uid) {
+                updateBook(bookData, props.book.uid).catch(err => {
+                    console.log('Error occurred while updating book: ', err);
+                });
+            }
         }
     };
 
