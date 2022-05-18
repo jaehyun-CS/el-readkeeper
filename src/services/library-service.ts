@@ -1,6 +1,6 @@
 import react from 'react';
 import Book, { NewBookInfo } from '../types/Book';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, DocumentData, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { DB } from '../firebaseSetup';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -42,4 +42,36 @@ export const updateBook = async (updatedBookData: NewBookInfo, bookUid: string) 
     } catch (err) {
         console.log('An error occurred while updating book in firestore: ', err);
     }
+};
+
+/**
+ * Fetches all book instances from Firestore
+ */
+export const fetchAllBooks = async () => {
+    try {
+        const querySnapshot = await getDocs(collection(DB, 'books'));
+        const booksArr: Book[] = [];
+
+        querySnapshot.forEach(doc => {
+            booksArr.push(convertToBook(doc.data()));
+        });
+
+        return booksArr;
+
+    } catch (err) {
+        console.log('An error occurred while fetching books from Firestore: ', err);
+    }
+};
+
+const convertToBook = (doc: DocumentData): Book => {
+    return {
+        uid: doc.uid,
+        title: doc.title,
+        subtitle: doc.subtitle,
+        author: doc.author,
+        genre: doc.genre,
+        rating: doc.rating,
+        description: doc.description,
+        key: doc.key
+    };
 };

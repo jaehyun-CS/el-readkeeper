@@ -5,50 +5,9 @@ import '../index.css';
 import { Container, Fab, Grid, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import BookModal from '../../components/BookModal';
+import { useEffect, useState } from 'react';
+import { fetchAllBooks } from '../../services/library-service';
 
-
-const books: Book[] = [
-    {
-        uid: 'someuid3',
-        title: 'God Is Not One',
-        subtitle: 'The Eight Rival Religions That Run the World',
-        author: 'Stephen Prothero',
-        genre: 'Religion',
-        rating: 0,
-        description: 'This is a description of this book.',
-        key: 'asdjfkasdjhf'
-    },
-    {
-        uid: 'someuid2',
-        title: 'God Is Not One',
-        subtitle: 'The Eight Rival Religions That Run the World',
-        author: 'Stephen Prothero',
-        genre: 'Religion',
-        rating: 0,
-        description: 'This is a description of this book.',
-        key: 'asigidis'
-    },
-    {
-        uid: 'someuid1',
-        title: 'God Is Not One',
-        subtitle: 'The Eight Rival Religions That Run the World',
-        author: 'Stephen Prothero',
-        genre: 'Religion',
-        rating: 0,
-        description: 'This is a description of this book.',
-        key: 'ldksldkls'
-    },
-    {
-        uid: 'someuid',
-        title: 'God Is Not One',
-        subtitle: 'The Eight Rival Religions That Run the World',
-        author: 'Stephen Prothero',
-        genre: 'Religion',
-        rating: 0,
-        description: 'This is a description of this book.',
-        key: 'asdfasdf'
-    },
-];
 
 const styles = {
     heading: {
@@ -73,8 +32,31 @@ const styles = {
     }
 };
 
-
 const LibraryPage = (): JSX.Element => {
+    const [ books, setBooks ] = useState<Book[]>([]);
+
+    const getData = async () => {
+        return await fetchAllBooks();
+    };
+
+    const refreshData = (): void => {
+        try {
+            getData().then(books => {
+                if (books) {
+                    setBooks(books);
+                } else {
+                    setBooks([]);
+                }
+            });
+        } catch (err) {
+            console.log('Error occurred while refreshing library data: ', err);
+        }
+    };
+
+    useEffect(() => {
+        refreshData();
+    }, []);
+
     return (
         <>
             <AppHeader />
