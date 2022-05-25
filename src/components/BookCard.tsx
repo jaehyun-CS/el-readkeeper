@@ -5,6 +5,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Book from '../types/Book';
 import BookModal from '../components/BookModal';
 import { useState } from 'react';
+import { deleteBook } from '../services/library-service';
 
 
 const styles = {
@@ -97,8 +98,11 @@ const BookCard = (props : Book): JSX.Element => {
         setConfirmOpen(!confirmOpen);
     };
 
-    const handleDeleteBook = () => {
-        console.log('DELETING BOOK');
+    const handleDeleteBook = async () => {
+        if (props.uid) {
+            await deleteBook(props.uid);
+        }
+        toggleConfirmModal();
     };
 
     const open = Boolean(anchorEl);
@@ -144,7 +148,7 @@ const BookCard = (props : Book): JSX.Element => {
                     <DialogTitle>Hold up... Wait a Minute</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Are you sure you want to delete this book?
+                            { `Are you sure you want to delete ${ props.title } from your library?` }
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

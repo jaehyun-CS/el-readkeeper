@@ -1,6 +1,6 @@
 import react from 'react';
 import Book, { NewBookInfo } from '../types/Book';
-import { collection, doc, DocumentData, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, DocumentData, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { DB } from '../firebaseSetup';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -34,13 +34,25 @@ export const createNewBook = async (bookData: NewBookInfo) => {
 /**
  * Updates an existing Book instance in Firestore with new information
  * @param updatedBookData updated book information
- * @param bookUid the uid of the book being edited in firestore
+ * @param bookUid the uid of the book being edited in Firestore
  */
 export const updateBook = async (updatedBookData: NewBookInfo, bookUid: string) => {
     try {
         await updateDoc(doc(DB, 'books', bookUid), updatedBookData);
     } catch (err) {
         console.log('An error occurred while updating book in firestore: ', err);
+    }
+};
+
+/**
+ * Deletes an existing Book instance in Firestore
+ * @param bookUid the uid of the book being deleted in Firestore
+ */
+export const deleteBook = async (bookUid: string) => {
+    try {
+        await deleteDoc(doc(DB, 'books', bookUid));
+    } catch (err) {
+        console.log('An error occurred while deleting book in firestore: ', err);
     }
 };
 
