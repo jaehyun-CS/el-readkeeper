@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, CardActions, Typography, Grid, Button, Chip, Popover, Paper, IconButton } from '@mui/material';
+import { Card, CardMedia, CardContent, CardActions, Typography, Grid, Button, Chip, Popover, Paper, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Book from '../types/Book';
 import BookModal from '../components/BookModal';
+import { useState } from 'react';
 
 
 const styles = {
@@ -52,6 +53,25 @@ const styles = {
     deleteButton: {
         color: 'white',
         margin: '.8rem 0 0 1rem'
+    },
+    submitButton: {
+        fontFamily: 'Avenir Next',
+        margin: '0 1.5em 1.5em 0',
+        backgroundColor: '#260101',
+
+        '&:hover': {
+            backgroundColor: '#8C4D3F'
+        }
+    },
+    cancelButton: {
+        backgroundColor: '#FFFFFF',
+        color: '#260101',
+        fontFamily: 'Avenir Next',
+        margin: '0 .5em 1.5em 0',
+
+        '&:hover': {
+            backgroundColor: '#D9D9D9'
+        }
     }
 };
 
@@ -62,7 +82,8 @@ const styles = {
  */
 const BookCard = (props : Book): JSX.Element => {
 
-    const [ anchorEl, setAnchorEl ] = React.useState<HTMLButtonElement | null>(null);
+    const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null);
+    const [ confirmOpen, setConfirmOpen ] = useState(false);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -70,6 +91,14 @@ const BookCard = (props : Book): JSX.Element => {
 
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const toggleConfirmModal = () => {
+        setConfirmOpen(!confirmOpen);
+    };
+
+    const handleDeleteBook = () => {
+        console.log('DELETING BOOK');
     };
 
     const open = Boolean(anchorEl);
@@ -107,9 +136,26 @@ const BookCard = (props : Book): JSX.Element => {
 
                 <BookModal book={ props } modalType='edit' />
 
-                <IconButton aria-label='delete' size='large' sx={ styles.deleteButton }>
+                <IconButton aria-label='delete' size='large' sx={ styles.deleteButton } onClick={ toggleConfirmModal }>
                     <DeleteOutlineIcon />
                 </IconButton>
+
+                <Dialog open={ confirmOpen } onClose={ toggleConfirmModal }>
+                    <DialogTitle>Hold up... Wait a Minute</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Are you sure you want to delete this book?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="text" onClick={ toggleConfirmModal } sx={ styles.cancelButton }>
+                            Cancel
+                        </Button>
+                        <Button variant="contained" onClick={ handleDeleteBook } sx={ styles.submitButton }>
+                            Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
                 <CardContent>
                     <Typography sx={ styles.title } variant='h4'>{ props.title }</Typography>
