@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, CardActions, Typography, Grid, Button, Chip, Popover, Paper } from '@mui/material';
+import { Card, CardMedia, CardContent, CardActions, Typography, Grid, Button, Chip, Popover, Paper, IconButton } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Book from '../types/Book';
 import BookModal from '../components/BookModal';
 
@@ -47,6 +48,10 @@ const styles = {
     },
     text: {
         fontFamily: 'Avenir Next',
+    },
+    deleteButton: {
+        color: 'white',
+        margin: '.8rem 0 0 1rem'
     }
 };
 
@@ -101,6 +106,10 @@ const BookCard = (props : Book): JSX.Element => {
                 </Popover>
 
                 <BookModal book={ props } modalType='edit' />
+
+                <IconButton aria-label='delete' size='large' sx={ styles.deleteButton }>
+                    <DeleteOutlineIcon />
+                </IconButton>
 
                 <CardContent>
                     <Typography sx={ styles.title } variant='h4'>{ props.title }</Typography>
