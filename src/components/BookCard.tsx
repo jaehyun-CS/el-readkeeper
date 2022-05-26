@@ -1,11 +1,29 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, CardActions, Typography, Grid, Button, Chip, Popover, Paper, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import {
+    Card,
+    CardMedia,
+    CardContent,
+    CardActions,
+    Typography,
+    Grid,
+    Button,
+    Chip,
+    Popover,
+    Paper,
+    IconButton,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Book from '../types/Book';
 import BookModal from '../components/BookModal';
 import { useState } from 'react';
 import { deleteBook } from '../services/library-service';
+import { useAuth } from '../context/AuthContext';
 
 
 const styles = {
@@ -85,6 +103,7 @@ const BookCard = (props : Book): JSX.Element => {
 
     const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null);
     const [ confirmOpen, setConfirmOpen ] = useState(false);
+    const { currentUser } = useAuth();
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -100,7 +119,7 @@ const BookCard = (props : Book): JSX.Element => {
 
     const handleDeleteBook = async () => {
         if (props.uid) {
-            await deleteBook(props.uid);
+            await deleteBook(currentUser.uid, props.uid);
         }
         toggleConfirmModal();
     };

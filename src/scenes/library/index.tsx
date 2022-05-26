@@ -6,7 +6,8 @@ import { Container, Fab, Grid, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import BookModal from '../../components/BookModal';
 import { useEffect, useState } from 'react';
-import { fetchAllBooks } from '../../services/library-service';
+import { fetchAllBooksForUser } from '../../services/library-service';
+import { useAuth } from '../../context/AuthContext';
 
 
 const styles = {
@@ -34,9 +35,10 @@ const styles = {
 
 const LibraryPage = (): JSX.Element => {
     const [ books, setBooks ] = useState<Book[]>([]);
+    const { currentUser } = useAuth();
 
     const getData = async () => {
-        return await fetchAllBooks();
+        return await fetchAllBooksForUser(currentUser.uid);
     };
 
     const refreshData = (): void => {

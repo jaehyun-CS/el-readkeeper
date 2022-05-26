@@ -47,7 +47,6 @@ const AppHeader = (): JSX.Element => {
     const [ myError, setMyError ] = useState('');
 
     const toggleDrawer = () => {
-        console.log('TOGGLIN');
         setOpen(!open);
     };
 

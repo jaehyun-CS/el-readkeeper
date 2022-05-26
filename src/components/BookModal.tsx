@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { object, string, number } from 'yup';
 import { createNewBook, updateBook } from '../services/library-service';
+import { useAuth } from '../context/AuthContext';
 
 
 type BookModalProps = {
@@ -66,6 +67,7 @@ const styles = {
  */
 const BookModal = (props: BookModalProps): JSX.Element => {
     const [ open, setOpen ] = React.useState(false);
+    const { currentUser } = useAuth();
 
     const renderButton = (): JSX.Element => {
         return props.modalType === 'create' ?
@@ -94,12 +96,12 @@ const BookModal = (props: BookModalProps): JSX.Element => {
 
     const submit = (bookData: NewBookInfo) => {
         if (props.modalType === 'create') {
-            createNewBook(bookData).catch(err => {
+            createNewBook(currentUser.uid, bookData).catch(err => {
                 console.log('Error occurred while adding new book: ', err);
             });
         } else {
             if (props.book && props.book.uid) {
-                updateBook(bookData, props.book.uid).catch(err => {
+                updateBook(currentUser.uid, bookData, props.book.uid).catch(err => {
                     console.log('Error occurred while updating book: ', err);
                 });
             }
