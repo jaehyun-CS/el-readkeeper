@@ -170,7 +170,6 @@ const BookModal = (props: BookModalProps): JSX.Element => {
                                 <Field
                                     required
                                     type='input'
-                                    autoFocus
                                     value={ values.title }
                                     margin='dense'
                                     name='title'
