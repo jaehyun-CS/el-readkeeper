@@ -7,9 +7,16 @@ import { styles } from '../login-signup-styles';
 import { useAuth, currentUser } from '../../context/AuthContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createNewUser } from '../../services/user-services';
 
 
 const signupSchema = Yup.object().shape({
+    fName: Yup.string()
+        .max(15, 'Dude wtf is this long ass first name, chill out')
+        .required('First name is required doofus'),
+    lName: Yup.string()
+        .max(20, 'Holy cow get that shortened dawg')
+        .required('How tf u not got a last name'),
     email: Yup.string().email('Fake email, nice try').required('Email is required'),
     password: Yup.string()
         .min(7, 'Too short! dats what she said')
@@ -32,8 +39,15 @@ const SignupPage = () => {
         try {
             setMyError('');
             setSubmitting(true);
-            await signup(data.email, data.password);
-            navigate('/');
+
+            signup(data.email, data.password).then(cred => {
+                createNewUser(cred.user.uid, data.fName, data.lName, data.email).catch(err => {
+                    console.log('Something went wrong while creating a new user: ', err);
+                });
+
+                navigate('/');
+            });
+
         } catch {
             console.log('FAILED TO CREATE AN ACCOUNT :(');
             setMyError('Failed to create account');
@@ -48,6 +62,8 @@ const SignupPage = () => {
             <Typography variant='h5' sx={ styles.subtitle }>Sign up</Typography>
             <Formik
                 initialValues={{
+                    fName: '',
+                    lName: '',
                     email: '',
                     password: ''
                 }}
@@ -56,6 +72,26 @@ const SignupPage = () => {
             >
                 {({ errors, touched }) => (
                     <Form>
+                        <Field
+                            fullWidth
+                            placeholder='First Name'
+                            name='fName'
+                            type='input'
+                            as={ TextField }
+                            sx={ styles.fieldBox }
+                        />
+                        { errors.fName && touched.fName ? ( <Alert severity="error" variant='filled'>{ errors.fName }</Alert> ) : null }
+
+                        <Field
+                            fullWidth
+                            placeholder='Last Name'
+                            name='lName'
+                            type='input'
+                            as={ TextField }
+                            sx={ styles.fieldBox }
+                        />
+                        { errors.lName && touched.lName ? ( <Alert severity="error" variant='filled'>{ errors.lName }</Alert> ) : null }
+
                         <Field
                             fullWidth
                             placeholder='Email Address'
