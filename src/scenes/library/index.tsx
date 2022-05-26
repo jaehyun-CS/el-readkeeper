@@ -27,7 +27,7 @@ const styles = {
         }
     },
     emptyMessage: {
-        padding: '.5em 0 5em 1.5em',
+        padding: '.5em 0 20em 1.5em',
         fontFamily: 'Avenir Next',
         color: '#260101',
     }
