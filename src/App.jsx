@@ -3,6 +3,7 @@ import LoginPage from './scenes/login/index';
 import SignupPage from './scenes/signup/index';
 import LibraryPage from './scenes/library/index';
 import ReadingsPage from './scenes/readings/index';
+import ProfilePage from './scenes/profile/index';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '../src/context/AuthContext';
 import { useAuth } from './context/AuthContext';
@@ -16,6 +17,14 @@ const App = () => {
                 <Routes>
                     <Route path='/login' element={ <LoginPage /> } />
                     <Route path='/signup' element={ <SignupPage /> } />
+                    <Route
+                        path='/profile'
+                        element={
+                            <PrivateRoute redirectTo="/login">
+                                <ProfilePage />
+                            </PrivateRoute>
+                        }
+                    />
                     <Route
                         path='/library'
                         element={

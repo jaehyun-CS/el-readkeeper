@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
@@ -86,6 +87,18 @@ const AppHeader = (): JSX.Element => {
                         onClick={toggleDrawer}
                     >
                         <List>
+                            <ListItem>
+                                <ListItemButton sx={ styles.listButton } onClick={ () => { navigate('/profile'); } }>
+                                    <ListItemIcon>
+                                        <AccountCircleIcon />
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        <Typography variant='h6' sx={ styles.listText }>
+                                            Profile
+                                        </Typography>
+                                    </ListItemText>
+                                </ListItemButton>
+                            </ListItem>
                             <ListItem>
                                 <ListItemButton sx={ styles.listButton } onClick={ () => { navigate('/library'); } }>
                                     <ListItemIcon>
