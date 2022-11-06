@@ -9,7 +9,8 @@ interface Book {
     genre: string,
     rating: number,
     description: string,
-    key: string
+    key: string,
+    pageCount: number
 }
 
 export type NewBookInfo = Omit<Book, 'uid' | 'key'>;

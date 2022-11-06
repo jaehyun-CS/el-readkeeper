@@ -114,7 +114,8 @@ const BookModal = (props: BookModalProps): JSX.Element => {
         author: string().required('A book requires an author dumbass'),
         genre: string().required('A genre is required'),
         rating: number().required('Rating is also required'),
-        description: string().required('Description is required')
+        description: string().required('Description is required'),
+        pageCount: number().required('Total page count is required')
     });
 
     const initialValues = props.book === null ?
@@ -124,7 +125,8 @@ const BookModal = (props: BookModalProps): JSX.Element => {
             author: '',
             genre: '',
             rating: 0,
-            description: ''
+            description: '',
+            pageCount: 0
         }
         :
         {
@@ -133,7 +135,8 @@ const BookModal = (props: BookModalProps): JSX.Element => {
             author: props.book.author,
             genre: props.book.genre,
             rating: props.book.rating,
-            description: props.book.description
+            description: props.book.description,
+            pageCount: props.book.pageCount
         };
 
     return (
@@ -248,6 +251,19 @@ const BookModal = (props: BookModalProps): JSX.Element => {
                                     as={ TextField }
                                 />
                                 { errors.description && touched.description ? ( <Alert severity='error' variant='filled'>{ errors.description }</Alert>) : null }
+
+                                <Field
+                                    required
+                                    type='input'
+                                    value={ values.pageCount }
+                                    margin='dense'
+                                    id='pageCount'
+                                    label='Total Page Count'
+                                    fullWidth
+                                    variant='outlined'
+                                    as={ TextField }
+                                />
+                                { errors.pageCount && touched.pageCount ? ( <Alert severity='error' variant='filled'>{ errors.pageCount }</Alert>) : null }
 
                             </DialogContent>
                             <DialogActions>

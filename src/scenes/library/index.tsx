@@ -86,6 +86,7 @@ const LibraryPage = (): JSX.Element => {
                                     rating={ book.rating }
                                     description={ book.description }
                                     key={ book.key }
+                                    pageCount={ book.pageCount }
                                 />
                             );
                         }) : <Typography variant='h5' sx={ styles.emptyMessage }>You don&apos;t currently have any books. Add one!</Typography>

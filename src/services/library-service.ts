@@ -22,7 +22,8 @@ export const createNewBook = async (userId: string, bookData: NewBookInfo) => {
         genre: bookData.genre,
         rating: bookData.rating,
         description: bookData.description,
-        key: newBookKey
+        key: newBookKey,
+        pageCount: bookData.pageCount
     };
 
     try {
@@ -88,6 +89,7 @@ const convertToBook = (doc: DocumentData): Book => {
         genre: doc.genre,
         rating: doc.rating,
         description: doc.description,
-        key: doc.key
+        key: doc.key,
+        pageCount: doc.pageCount
     };
 };

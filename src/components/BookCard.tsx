@@ -154,6 +154,7 @@ const BookCard = (props : Book): JSX.Element => {
                         <Typography sx={ styles.text } variant='body1'>Genre: { props.genre }</Typography>
                         <Typography sx={ styles.text } variant='body1'>Rating: { props.rating }</Typography>
                         <Typography sx={ styles.text } variant='body1'>{ props.description && `Description: ${ props.description }` }</Typography>
+                        <Typography sx={ styles.text } variant='body1'>Total Page Count: { props.pageCount }</Typography>
                     </Paper>
                 </Popover>
 
